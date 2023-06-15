@@ -1,8 +1,0 @@
-applications:
-  - name: ans-dcom-app
-    path: target/ans-dcom-0.0.1-SNAPSHOT.jar
-    timeout: 180
-    buildpacks:
-      - java_buildpack
-    env:
-      JAVA_OPTS: '-Xdebug -Xrunjdwp:transport=dt_socket,address=9090,server=y,suspend=n'
