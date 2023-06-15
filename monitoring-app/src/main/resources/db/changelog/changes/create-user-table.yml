@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id:  create-user-table
+      author:  ivan
+      changes:
+        -  createTable:
+             columns:
+               -  column:
+                    name:  id
+                    type:  uuid
+                    constraints:
+                      primaryKey: true
+                      primaryKeyName: pk_users
+                      nullable: false
+               -  column:
+                    name: name
+                    type: varchar(128)
+                    constraints:
+                      nullable: false
+                      unique: true
+               -  column:
+                    name: password
+                    type: varchar(128)
+                    constraints:
+                      nullable: false
+               -  column:
+                    name: role
+                    type: varchar(128)
+                    constraints:
+                      nullable: false
+             schemaName:  public
+             tableName:  users

@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+
+  postgres:
+    image: postgres:9.6
+    container_name: tu-postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - PGPASSWORD=admin
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=tu-dev
+    volumes:
+      - ~/.localdev/data/docker-volumes/tu-postgres:/var/lib/postgresql/data 777
+    healthcheck:
+      retries: 20
+      interval: 5s
+      test: >
+        psql \
+          --quiet \
+          --no-align \
+          --tuples-only \
+          --command='SELECT 1' \
+          --host="$$(hostname)" \
+          --dbname="$${POSTGRES_DB}" \
+          --username="$${POSTGRES_USER}"

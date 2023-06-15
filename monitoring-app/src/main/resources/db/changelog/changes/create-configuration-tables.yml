@@ -1,0 +1,93 @@
+databaseChangeLog:
+  - changeSet:
+      id:  create-configuration-tables
+      author:  ivan
+      changes:
+        -  createTable:
+             columns:
+               -  column:
+                    name:  id
+                    type:  uuid
+                    constraints:
+                      primaryKey: true
+                      primaryKeyName: pk_configurations
+                      nullable: false
+               -  column:
+                    name: name
+                    type: varchar(128)
+                    constraints:
+                      nullable: false
+                      unique: true
+               -  column:
+                    name: base_url
+                    type: varchar(128)
+                    constraints:
+                      nullable: false
+               -  column:
+                    name: namespace
+                    type: varchar(128)
+                    constraints:
+                      nullable: false
+               - column:
+                   name: deployment
+                   type: varchar(128)
+                   constraints:
+                     nullable: false
+               - column:
+                   name: label
+                   type: varchar(128)
+                   constraints:
+                     nullable: false
+             schemaName:  public
+             tableName:  configurations
+        -  createTable:
+             columns:
+               - column:
+                   name: id
+                   type: uuid
+                   constraints:
+                     primaryKey: true
+                     primaryKeyName: pk_conditions
+                     nullable: false
+               -  column:
+                    name: configuration_id
+                    type: uuid
+                    constraints:
+                      foreignKeyName: fk_action
+                      references: configurations(id)
+                      deleteCascade: true
+               - column:
+                   name: destination
+                   type: varchar(128)
+                   constraints:
+                     nullable: false
+             schemaName: public
+             tableName: actions
+        - createTable:
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_actions
+                    nullable: false
+              - column:
+                  name: configuration_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_condition
+                    references: configurations(id)
+                    deleteCascade: true
+              - column:
+                  name: property_key
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: property_value
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+            schemaName: public
+            tableName: conditions
